@@ -19,6 +19,7 @@ public class universidad{
         int clase;
         int notaClase=0;
         String opcion3="";
+        int opcion4=0;
 
         //Menu
         while (go){
@@ -50,10 +51,32 @@ public class universidad{
                     currentIndex=sc.nextInt();
                     sc.nextLine();
                     printMenuClases();
-                    clase=sc.nextInt();
+                    opcion4=sc.nextInt();
                     sc.nextLine();
                     System.out.println("Ingrese la nota: ");
                     notaClase=sc.nextInt();
+                    Examen examen = new Examen("",notaClase);
+                    switch(opcion4){
+                        case 1:
+                            examen.setNombre("Matematica");
+                            break;
+                        case 2:
+                            examen.setNombre("Lenguaje");
+                            break;
+                        case 3:
+                            examen.setNombre("Quimica");
+                            break;
+                        case 4:
+                            examen.setNombre("Fisica");
+                            break;
+                        case 5:
+                            examen.setNombre("Comprension lectora");
+                            break;
+                        case 6:
+                            examen.setNombre("Estadistica");
+                            break;
+                    }
+                    estudiantes.get(currentIndex).setExamen(examen);
                     System.out.println("En que sede se ubica:");
                     System.out.println("1. Sede central");
                     System.out.println("2. Sede sur");
@@ -87,16 +110,13 @@ public class universidad{
                     System.out.println("");
                     switch(opcion3){
                         case "1":
-                            System.out.println("Sede central");
-                            System.out.println("");
+                            printSedeCentral(sedeCentral);
                             break;
                         case "2":
-                            System.out.println("Sede sur");
-                            System.out.println("");
+                            printSedeSur(sedeSur);
                             break;
                         case "3":
-                            System.out.println("Sede norte");
-                            System.out.println("");
+                            printSedeNorte(sedeNorte);
                             break;
                         default:
                             System.out.println("Ingrese una opcion valida");
@@ -141,5 +161,43 @@ public class universidad{
         System.out.println("2. Sede sur");
         System.out.println("3. Sede norte");
     }
-
+    public static void printSedeCentral(ArrayList<Estudiante> sedeCentral) {
+        System.out.println("Sede central");
+        System.out.println("");
+    
+        for (Estudiante estudiante : sedeCentral) {
+            System.out.println("Nombre: " + estudiante.getNombre());
+            System.out.println("Examenes:");
+            for (Examen examen : estudiante.getExamenes()) {
+                System.out.println("  - " + examen.getNombre() + ": " + examen.getNota());
+            }
+            System.out.println("");
+        }
+    }
+    public static void printSedeSur(ArrayList<Estudiante> sedeSur) {
+        System.out.println("Sede sur");
+        System.out.println("");
+    
+        for (Estudiante estudiante : sedeSur) {
+            System.out.println("Nombre: " + estudiante.getNombre());
+            System.out.println("Examenes:");
+            for (Examen examen : estudiante.getExamenes()) {
+                System.out.println("  - " + examen.getNombre() + ": " + examen.getNota());
+            }
+            System.out.println("");
+        }
+    }
+    public static void printSedeNorte(ArrayList<Estudiante> sedeNorte) {
+        System.out.println("Sede norte");
+        System.out.println("");
+    
+        for (Estudiante estudiante : sedeNorte) {
+            System.out.println("Nombre: " + estudiante.getNombre());
+            System.out.println("Examenes:");
+            for (Examen examen : estudiante.getExamenes()) {
+                System.out.println("  - " + examen.getNombre() + ": " + examen.getNota());
+            }
+            System.out.println("");
+        }
+    }
 }

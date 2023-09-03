@@ -1,18 +1,18 @@
 public class Examen {
-    private int nombre;
+    private String nombre;
     private int nota;
 
-    public Examen(int nombre, int nota) {
+    public Examen(String nombre, int nota) {
         this.nombre = nombre;
         this.nota = nota;
     }
-    public int getNombre() {
+    public String getNombre() {
         return nombre;
     }
     public int getNota() {
         return nota;
     }
-    public void setNombre(int nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
     public void setNota(int nota) {

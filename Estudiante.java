@@ -16,6 +16,12 @@ public class Estudiante {
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.examenes = new ArrayList<Examen>();
     } 
+    public void setExamen(Examen examen) {
+        this.examenes.add(examen);
+    }
+    public ArrayList<Examen> getExamenes() {
+        return examenes;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -48,3 +54,4 @@ public class Estudiante {
         return examenes.isEmpty() ? 0 : sum / examenes.size();
     }
 }
+
