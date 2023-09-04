@@ -110,7 +110,7 @@ public class universidad{
                     System.out.println("");
                     switch(opcion3){
                         case "1":
-                            printSedeCentral(sedeCentral);
+                            printMenuSedes();
                             break;
                         case "2":
                             printSedeSur(sedeSur);
@@ -200,4 +200,14 @@ public class universidad{
             System.out.println("");
         }
     }
+    public static void printMenuSedes(ArrayList<Sedes> sedes) {
+                Sedes sedeCentral = sedes.get(0); 
+                System.out.println("Estadísticas para la Sede Central:");
+                System.out.println("Promedio: " + sedeCentral.promedioNotasSede());
+                System.out.println("Mediana: " + sedeCentral.medianaNotasSede());
+                System.out.println("Moda: " + sedeCentral.modaNotasSede());
+                System.out.println("Desviación Estándar: " + sedeCentral.desviacionEstandarNotasSede());
+        }
+    
+    
 }
