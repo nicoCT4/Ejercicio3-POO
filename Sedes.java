@@ -1,94 +1,88 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 public class Sedes {
     private String nombre;
     private ArrayList<Estudiante> estudiantes;
 
-    public Sedes(String nombre) {
+    public Sedes(String nombre, ArrayList<Estudiante> estudiantes) {
         this.nombre = nombre;
-        this.estudiantes = new ArrayList<Estudiante>();
+        this.estudiantes = new ArrayList<>();
     }
-
-    public void agregarEstudiante(Estudiante estudiante) {
-        estudiantes.add(estudiante);
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiantes.add(estudiante);
     }
-
-    public float promedioNotasSede() {
-        float sum = 0;
+    public double calcularMediana(String materia) {
+        List<Integer> notas = new ArrayList<>();
         for (Estudiante estudiante : estudiantes) {
-            sum += estudiante.promedio();
-        }
-        return estudiantes.isEmpty() ? 0 : sum / estudiantes.size();
-    }
-
-    public float medianaNotasSede() {
-        List<Float> notas = new ArrayList<>();
-        for (Estudiante estudiante : estudiantes) {
-            for (Examen examen : estudiante.getExamenes()) {
-                notas.add((float) examen.getNota());
+            if (estudiante.getNotasPorMateria().containsKey(materia)) {
+                notas.addAll(estudiante.getNotasPorMateria().get(materia));
             }
         }
-
+        
         Collections.sort(notas);
-
-        int n = notas.size();
-        if (n % 2 == 0) {
-            float nota1 = notas.get(n / 2 - 1);
-            float nota2 = notas.get(n / 2);
-            return (nota1 + nota2) / 2;
+        int size = notas.size();
+        
+        if (size % 2 == 0) {
+            int mid1 = notas.get(size / 2 - 1);
+            int mid2 = notas.get(size / 2);
+            return (double) (mid1 + mid2) / 2.0;
         } else {
-            return notas.get(n / 2);
+            return (double) notas.get(size / 2);
         }
     }
 
-    public int modaNotasSede() {
-        List<Float> notas = new ArrayList<>();
+    public int calcularModa(String materia) {
+        List<Integer> notas = new ArrayList<>();
         for (Estudiante estudiante : estudiantes) {
-            for (Examen examen : estudiante.getExamenes()) {
-                notas.add((float) examen.getNota());
+            if (estudiante.getNotasPorMateria().containsKey(materia)) {
+                notas.addAll(estudiante.getNotasPorMateria().get(materia));
             }
         }
 
-        Map<Float, Integer> frequencyMap = new HashMap<>();
-        int maxFrequency = 0;
-        float moda = 0;
+        int moda = 0;
+        int maxCount = 0;
 
-        for (Float nota : notas) {
-            int frequency = frequencyMap.getOrDefault(nota, 0) + 1;
-            frequencyMap.put(nota, frequency);
-
-            if (frequency > maxFrequency) {
-                maxFrequency = frequency;
+        for (int nota : notas) {
+            int count = Collections.frequency(notas, nota);
+            if (count > maxCount) {
                 moda = nota;
+                maxCount = count;
             }
         }
 
-        return (int) moda;
+        return moda;
     }
 
-    public float desviacionEstandarNotasSede() {
-        List<Float> notas = new ArrayList<>();
+    public double calcularDesviacionEstandar(String materia) {
+        List<Integer> notas = new ArrayList<>();
         for (Estudiante estudiante : estudiantes) {
-            for (Examen examen : estudiante.getExamenes()) {
-                notas.add((float) examen.getNota());
+            if (estudiante.getNotasPorMateria().containsKey(materia)) {
+                notas.addAll(estudiante.getNotasPorMateria().get(materia));
             }
         }
 
-        float sum = 0;
-        float mean = promedioNotasSede();
-
-        for (float nota : notas) {
-            sum += Math.pow(nota - mean, 2);
-        }
-
-        return (float) Math.sqrt(sum / notas.size());
+        double media = notas.stream().mapToDouble(Integer::doubleValue).average().orElse(0.0);
+        double sumOfSquares = notas.stream().mapToDouble(nota -> Math.pow(nota - media, 2)).sum();
+        return Math.sqrt(sumOfSquares / notas.size());
     }
+    public ArrayList<String> obtenerMateriasPorSede(Sedes sede) {
+        ArrayList<String> materias = new ArrayList<>();
+        for (Estudiante estudiante : sede.getEstudiantes()) {
+            for (Map.Entry<String, List<Integer>> entry : estudiante.getNotasPorMateria().entrySet()) {
+                if (!materias.contains(entry.getKey())) {
+                    materias.add(entry.getKey());
+                }
+            }
+        }
+        return materias;
+    }
+    
+    public ArrayList<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+    
 }
-
-
-
-

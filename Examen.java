@@ -18,5 +18,4 @@ public class Examen {
     public void setNota(int nota) {
         this.nota = nota;
     }
-    //Promedio, mediana, moda, desviacion estandar de notas
 }

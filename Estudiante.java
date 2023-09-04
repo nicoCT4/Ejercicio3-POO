@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Estudiante {
     private String nombre;
@@ -7,6 +10,7 @@ public class Estudiante {
     private String correo;
     private String fechaDeNacimiento;
     private ArrayList<Examen> examenes;
+    private Map<String, List<Integer>> notasPorMateria = new HashMap<>();
 
     public Estudiante(String nombre, String apellido, int carnet, String correo, String fechaDeNacimiento) {
         this.nombre = nombre;
@@ -46,12 +50,15 @@ public class Estudiante {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    public float promedio(){
-        float sum=0;
-        for (Examen examen : examenes) {
-            sum+=examen.getNota();
+    public void agregarNota(String materia, int nota) {
+        if (!notasPorMateria.containsKey(materia)) {
+            notasPorMateria.put(materia, new ArrayList<>());
         }
-        return examenes.isEmpty() ? 0 : sum / examenes.size();
+        notasPorMateria.get(materia).add(nota);
+    }
+
+    public Map<String, List<Integer>> getNotasPorMateria() {
+        return notasPorMateria;
     }
 }
 
